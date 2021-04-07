@@ -1,11 +1,64 @@
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    let operations = ["+", "-", "/", "*", "%", "count", "avg", "fact"]
+    var numbers: [Int] = []
+    var selectedOp: String = ""
+    for val in args {
+        if(operations.contains(val)) {
+            selectedOp = val
+        } else {
+            let num: Int = Int(val)!
+            numbers.append(num)
+        }
+    }
+    var total: Int = 0;
+    switch selectedOp {
+    case "+":
+        for n in numbers {
+            total += n
+        }
+    case "-":
+        total = numbers[0] - numbers[1]
+    case "/":
+        total = numbers[0] / numbers[1]
+    case "*":
+        total = 1;
+        for n in numbers {
+            total *= n
+        }
+    case "%":
+        total = numbers[0] % numbers[1]
+    case "count":
+        total = numbers.count
+    case "avg":
+        if (numbers.count != 0) {
+            for n in numbers {
+                total += n
+            }
+            total /= numbers.count
+        }
+    case "fact":
+
+        if (numbers.count != 0) {
+            total = 1
+            if (numbers[0] != 0) {
+                for n in 1...numbers[0] {
+                    total *= n
+                }
+            }
+        }
+    default:
+        return -1
+    }
+    return total
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    let args = (arg.split(separator: " ")).map({ (substring) in
+        return String(substring)
+    })
+    return calculate(args)
 }
 
 // -------------------------------------------
@@ -53,7 +106,7 @@ calculate("5 fact") == 120
 
 // Implement calculate([String]) and calculate(String)
 // to handle negative numbers
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -68,16 +121,69 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
 /*
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    let operations = ["+", "-", "/", "*", "%", "count", "avg", "fact"]
+    var numbers: [Double] = []
+    var selectedOp: String = ""
+    for val in args {
+        if(operations.contains(val)) {
+            selectedOp = val
+        } else {
+            let num: Double = Double(val)!
+            numbers.append(num)
+        }
+    }
+    var total: Double = 0;
+    switch selectedOp {
+    case "+":
+        for n in numbers {
+            total += n
+        }
+    case "-":
+        total = numbers[0] - numbers[1]
+    case "/":
+        total = numbers[0] / numbers[1]
+    case "*":
+        total = 1;
+        for n in numbers {
+            total *= n
+        }
+    case "%":
+        total = numbers[0].truncatingRemainder(dividingBy: numbers[1])
+    case "count":
+        total = Double(numbers.count)
+    case "avg":
+        if (numbers.count != 0) {
+            for n in numbers {
+                total += n
+            }
+            total /= Double(numbers.count)
+        }
+    case "fact":
+        
+        if (numbers.count != 0) {
+            total = 1
+            if (numbers[0] != 0) {
+                for n in 1...Int(numbers[0]) {
+                    total *= Double(n)
+                }
+            }
+        }
+    default:
+        return -1
+    }
+    return total
 }
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    let args = (arg.split(separator: " ")).map({ (substring) in
+        return String(substring)
+    })
+    return calculate(args)
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
