@@ -1,57 +1,46 @@
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    let operations = ["+", "-", "/", "*", "%", "count", "avg", "fact"]
-    var numbers: [Int] = []
-    var selectedOp: String = ""
-    for val in args {
-        if(operations.contains(val)) {
-            selectedOp = val
-        } else {
-            let num: Int = Int(val)!
-            numbers.append(num)
-        }
-    }
-    var total: Int = 0;
-    switch selectedOp {
-    case "+":
-        for n in numbers {
-            total += n
-        }
-    case "-":
-        total = numbers[0] - numbers[1]
-    case "/":
-        total = numbers[0] / numbers[1]
-    case "*":
-        total = 1;
-        for n in numbers {
-            total *= n
-        }
-    case "%":
-        total = numbers[0] % numbers[1]
-    case "count":
-        total = numbers.count
-    case "avg":
-        if (numbers.count != 0) {
-            for n in numbers {
-                total += n
-            }
-            total /= numbers.count
-        }
-    case "fact":
-
-        if (numbers.count != 0) {
-            total = 1
-            if (numbers[0] != 0) {
-                for n in 1...numbers[0] {
-                    total *= n
+    switch args.last {
+        case "count":
+            return args.count - 1
+        case "avg":
+            if (args.count > 1) {
+                var total = 0
+                for a in args {
+                    if (Int(a) != nil) {
+                        total += Int(a)!
+                    }
                 }
+                return total / (args.count - 1)
             }
-        }
+        case "fact":
+            if (args.count > 1) {
+                var total = 1
+                if(Int(args[0])! > 0) {
+                    for n in 1...Int(args[0])! {
+                        total *= n
+                    }
+                }
+                return total
+            }
     default:
-        return -1
+        switch args[1] {
+        case "+":
+            return Int(args[0])! + Int(args[2])!
+        case "-":
+            return Int(args[0])! - Int(args[2])!
+        case "/":
+            return Int(args[0])! / Int(args[2])!
+        case "*":
+            return Int(args[0])! * Int(args[2])!
+        case "%":
+            return Int(args[0])! % Int(args[2])!
+        default:
+            return 0
+        }
     }
-    return total
+    return 0
 }
 
 func calculate(_ arg: String) -> Int {
@@ -165,7 +154,6 @@ func calculate(_ args: [String]) -> Double {
             total /= Double(numbers.count)
         }
     case "fact":
-        
         if (numbers.count != 0) {
             total = 1
             if (numbers[0] != 0) {
@@ -179,6 +167,7 @@ func calculate(_ args: [String]) -> Double {
     }
     return total
 }
+ 
 func calculate(_ arg: String) -> Double {
     let args = (arg.split(separator: " ")).map({ (substring) in
         return String(substring)
