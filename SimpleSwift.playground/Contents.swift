@@ -116,56 +116,46 @@ calculate("1 -2 3 -4 5 count") == 5
 // to use floating-point values
 /*
 func calculate(_ args: [String]) -> Double {
-    let operations = ["+", "-", "/", "*", "%", "count", "avg", "fact"]
-    var numbers: [Double] = []
-    var selectedOp: String = ""
-    for val in args {
-        if(operations.contains(val)) {
-            selectedOp = val
-        } else {
-            let num: Double = Double(val)!
-            numbers.append(num)
-        }
-    }
-    var total: Double = 0;
-    switch selectedOp {
-    case "+":
-        for n in numbers {
-            total += n
-        }
-    case "-":
-        total = numbers[0] - numbers[1]
-    case "/":
-        total = numbers[0] / numbers[1]
-    case "*":
-        total = 1;
-        for n in numbers {
-            total *= n
-        }
-    case "%":
-        total = numbers[0].truncatingRemainder(dividingBy: numbers[1])
-    case "count":
-        total = Double(numbers.count)
-    case "avg":
-        if (numbers.count != 0) {
-            for n in numbers {
-                total += n
-            }
-            total /= Double(numbers.count)
-        }
-    case "fact":
-        if (numbers.count != 0) {
-            total = 1
-            if (numbers[0] != 0) {
-                for n in 1...Int(numbers[0]) {
-                    total *= Double(n)
-                }
-            }
-        }
-    default:
-        return -1
-    }
-    return total
+ switch args.last {
+     case "count":
+         return Double(args.count - 1)
+     case "avg":
+         if (args.count > 1) {
+            var total: Double = 0
+             for a in args {
+                 if (Double(a) != nil) {
+                     total += Double(a)!
+                 }
+             }
+             return total / Double(args.count - 1)
+         }
+     case "fact":
+         if (args.count > 1) {
+            var total: Double = 1
+             if(Double(args[0])! > 0) {
+                 for n in 1...Int(args[0])! {
+                     total *= Double(n)
+                 }
+             }
+             return total
+         }
+ default:
+     switch args[1] {
+     case "+":
+         return Double(args[0])! + Double(args[2])!
+     case "-":
+        return Double(args[0])! - Double(args[2])!
+     case "/":
+        return Double(args[0])! / Double(args[2])!
+     case "*":
+        return Double(args[0])! * Double(args[2])!
+     case "%":
+        return Double(args[0])!.truncatingRemainder(dividingBy: Double(args[2])!)
+     default:
+         return 0
+     }
+ }
+ return 0
 }
  
 func calculate(_ arg: String) -> Double {
