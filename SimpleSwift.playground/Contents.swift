@@ -114,11 +114,11 @@ calculate("1 -2 3 -4 5 count") == 5
  
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
-/*
+
 func calculate(_ args: [String]) -> Double {
  switch args.last {
      case "count":
-         return Double(args.count - 1)
+        return Double(args.count - 1)
      case "avg":
          if (args.count > 1) {
             var total: Double = 0
@@ -172,4 +172,3 @@ calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
 calculate("1.0 2.0 3.0 4.0 5.0 count") == 5
-*/
